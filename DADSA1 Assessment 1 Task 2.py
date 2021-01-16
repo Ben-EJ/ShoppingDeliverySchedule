@@ -74,7 +74,7 @@ class ShoppingLists:
     def getNeedToBuyShopCQuantities(self):
         return self.needToBuyShopCQuantities
     def getNeedToBuyShopDQuantities(self):
-        return self.needToBuyShopCQuantities
+        return self.needToBuyShopDQuantities
     
     def getNeedToBuyShopA(self):
         return self.needToBuyShopA
@@ -297,13 +297,18 @@ def categorySort():
     splitElementCount = -1
     splitItemName = []
     
-    itemCategoryBread = []
-    itemCategoryMilk = []
-    itemCategoryRice = []
-    itemCategoryButter = []
-    itemCategoryApples = []
-    itemCategoryOnions = []
+    categoryTempStoreage = { "Bread" : [], "Milk" : [], "Cheese" : [], "Tomatoes" : [], "Carrots" : [],
+    "Potatoes" : [], "Rice" : [], "Butter" : [], "Spread" : [],"Eggs" : [],"Apples" : [],"Onions" : [],
+    "Oranges" : [],"Kiwi" : [], "Kitchen" : [], "Toilet" : [], "Tea" : [], "Coffee" : []}
     
+    categoryTempStoreageKey = ["Bread", "Milk", "Cheese", "Tomatoes", "Carrots",
+    "Potatoes", "Rice", "Butter", "Spread", "Eggs", "Apples", "Onions",
+    "Oranges", "Kiwi", "Kitchen", "Toilet", "Tea", "Coffee"]
+
+    categoryTempStoreageLower = ["bread", "milk", "cheese", "tomatoes", "carrots",
+    "potatoes", "rice", "butter", "spread", "eggs", "apples", "onions",
+    "oranges", "kiwi", "kitchen", "toilet", "tea", "coffee"]
+
     for i in shopObjects: # for each item
         itemNumber = itemNumber + 1
         itemName = shopObjects[itemNumber].getItemName() # Gets an items name
@@ -312,49 +317,19 @@ def categorySort():
             splitElementCount = splitElementCount + 1 
             # This next section of code tries to match one of those key words to a catagory.
             #for example if an item has bread as a keyword it's item number will be added to the bread category
-            if (splitItemName[splitElementCount] == "Bread" or splitItemName[splitElementCount] == "bread"):
-                itemCategoryBread.append(itemNumber)                               
-            
-                #this next line is for testing
-                #itemCategoryBread.append(shopObjects[itemNumber].getItemName())
+            catagoryTmpStoreKeyCount = -1
+            for i in categoryTempStoreageKey:
+                catagoryTmpStoreKeyCount = catagoryTmpStoreKeyCount + 1
+                if (splitItemName[splitElementCount] == categoryTempStoreageKey[catagoryTmpStoreKeyCount] or splitItemName[splitElementCount] == categoryTempStoreageLower[catagoryTmpStoreKeyCount]):
+                    categoryTempStoreage[categoryTempStoreageKey[catagoryTmpStoreKeyCount]].append(itemNumber)                               
+                    #this next line is for testing
+                    #categoryTempStoreage[categoryTempStoreageKey[catagoryTmpStoreKeyCount]].append(shopObjects[itemNumber].getItemName())
                 
-            elif (splitItemName[splitElementCount] == "Milk" or splitItemName[splitElementCount] == "milk"):
-                itemCategoryMilk.append(itemNumber) 
-                
-                #this next line is for testing
-                #itemCategoryMilk.append(shopObjects[itemNumber].getItemName())
-                
-            elif (splitItemName[splitElementCount] == "Rice" or splitItemName[splitElementCount] == "rice"):
-                itemCategoryRice.append(itemNumber) 
-                
-                #this next line is for testing
-                #itemCategoryRice.append(shopObjects[itemNumber].getItemName())
-                
-            elif (splitItemName[splitElementCount] == "Butter" or splitItemName[splitElementCount] == "butter"):
-                itemCategoryButter.append(itemNumber)
-                
-                #this next line is for testing
-                #itemCategoryButter.append(shopObjects[itemNumber].getItemName())
-                
-            elif (splitItemName[splitElementCount] == "Apples" or splitItemName[splitElementCount] == "apples"):
-                itemCategoryApples.append(itemNumber) 
-                
-                #this next line is for testing
-                #itemCategoryApples.append(shopObjects[itemNumber].getItemName())
-                
-            elif (splitItemName[splitElementCount] == "Onions" or splitItemName[splitElementCount] == "onions"):
-                itemCategoryOnions.append(itemNumber)
-                
-                #this next line is for testing
-                #itemCategoryOnions.append(shopObjects[itemNumber].getItemName())
         splitElementCount = -1 
-        
-    catagoryObjects.append(Catagories("Bread", itemCategoryBread))
-    catagoryObjects.append(Catagories("Milk", itemCategoryMilk))
-    catagoryObjects.append(Catagories("Rice", itemCategoryRice))
-    catagoryObjects.append(Catagories("Butter", itemCategoryButter))
-    catagoryObjects.append(Catagories("Apples", itemCategoryApples))
-    catagoryObjects.append(Catagories("Onions", itemCategoryOnions))
+    countClassInput = -1 
+    for i in categoryTempStoreageKey:
+        countClassInput = countClassInput + 1
+        catagoryObjects.append(Catagories(categoryTempStoreageKey[countClassInput], categoryTempStoreage[categoryTempStoreageKey[countClassInput]]))
      
 #Gives all items in the shopObjects = [] array Item Numbers
 def giveItemNumber():
@@ -468,8 +443,13 @@ def proccess():
                    houseObjects[mainCounter].setNeedToBuyShopCQuantities(tempItemListStorage[itemListCounter])
                    
                elif(canBeFoundInStore == "D"):
-                   houseObjects[mainCounter].setNeedToBuyShopD(itemName)    
+                   
+                   houseObjects[mainCounter].setNeedToBuyShopD(itemName) 
+                    
                    houseObjects[mainCounter].setNeedToBuyShopDQuantities(tempItemListStorage[itemListCounter])
+               else:
+                   print("Error in proccess")   
+
         combination = minimumStores(tempProccessed)
         houseObjects[mainCounter].setStoreCombinations(combination)
         tempProccessed = []
@@ -652,8 +632,8 @@ def substitutions():
                                                         save5 = itemsRequiredCQuantities.pop(itemsRequiredCAmmount)
                                                         houseObjects[houseCount].replaceNeedToBuyShopCQuantities(itemsRequiredCQuantities)
                                                         houseObjects[houseCount].setNeedToBuyShopAQuantities(save5)
-                                                      
                                                         break
+                                                        
                                                     elif(shopObjects[WhatItem].getItemStores()[1] == "Y"):                                                                                                                                                            
                                                         
                                                         itemsRequiredC.pop(itemsRequiredCAmmount)#remove item
@@ -843,32 +823,15 @@ def printHouseObjects():
 # prints out data from each object in catagories FOR TESTING PERPOSES ONLY       
 def outputCategories():
     print(" ")
-    print("===================================================================")
-    print("Bread") 
-    print("Item Numbers")     
-    print(catagoryObjects[0].getItemList())
-    print("============================================")
-    print("Milk")
-    print("Item Numbers")  
-    print(catagoryObjects[1].getItemList())
-    print("============================================")
-    print("Rice")
-    print("Item Numbers")  
-    print(catagoryObjects[2].getItemList())
-    print("============================================")
-    print("Butter")
-    print("Item Numbers")  
-    print(catagoryObjects[3].getItemList())
-    print("============================================")
-    print("Apples")
-    print("Item Numbers")  
-    print(catagoryObjects[4].getItemList())
-    print("============================================")
-    print("Onions")
-    print("Item Numbers")  
-    print(catagoryObjects[5].getItemList())
-    print("===================================================================")  
-    print(" ")
+    count = -1
+    for i in catagoryObjects:
+        count =  count + 1
+        print("===================================================================")
+        print("Catagory: " + catagoryObjects[count].getCatagoryName()) 
+        print("Item Numbers")     
+        print(catagoryObjects[count].getItemList())
+        print("===================================================================") 
+        print(" ")
 
 #runs all other functions    
 def main():
@@ -896,7 +859,8 @@ def test():
     printHouseObjects()       
         
 test()        
-        
+
+     
         
         
         
