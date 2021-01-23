@@ -696,10 +696,44 @@ def addDays():
             
         shoppingScheduleObjects.append(ShoppingSchedule(dayCount,weekCount))#Adds days 
         deliveryObjects.append(Delivery(dayCount,weekCount))#Adds days
+
+#This function finds out if a houses minimum combination is already in combinations.      
+def matchCombinations(combinations, minimumCombos):
+    combinationCount = -1
+    for n in combinations:# for all combinations
+        combinationCount = combinationCount + 1
+        combinationShopCount = -1
+        match = 0
+        for x in combinations[combinationCount]:# for each shop in combination
+            combinationShopCount = combinationShopCount + 1
+            if (minimumCombos[combinationShopCount] == combinations[combinationCount][combinationShopCount]):# if a shop is in both minimum combination and combination
+                    match = match + 1 # increment how many matches there have been
+            if(match == len(combinations[combinationCount])):# if both shops match 
+                return True # return true
+    return False # if it goes through all combinations and does not find a match return false
+
+#finds shops that will need to be visited by all houses
+def commonShopCombinations():
+    shoppingCountWeekOne = -1
+    combinations = []
+    for i in houseObjects:# for all houses
+        shoppingCountWeekOne = shoppingCountWeekOne + 1
         
+        minimumCombos = houseObjects[shoppingCountWeekOne].getMinimalCombinations()# get minimum combinations
         
-#creates Shopping and delivery Scedules
-def Scedule():
+        if(len(combinations) == 0):# if there are no shopping combinations in combination list
+            combinations.append(minimumCombos)# add first combination 
+        else:
+            combinationsCount = -1
+            matchCondition = False
+            matchCondition = matchCombinations(combinations, minimumCombos)# find a match 
+            if(matchCondition == True):# the moment it finds a match end iterate the loop by 1
+                continue
+            if(matchCondition == False):# if it never finds a match add to combinations
+                combinations.append(minimumCombos)
+                continue
+    print(combinations)                     
+def shoppingScedule():
     pass
 #outputs Shopping scedule
 def outputScedule():
@@ -823,7 +857,8 @@ def main():
     recalculateMinShops()
     substitutions(2)
     recalculateMinShops()
-    addDays()        
+    addDays()
+    commonShopCombinations()        
     #Scedule() # Implement for task 2  
             
     #outputScedule()   # Implement for task 2     
@@ -837,7 +872,7 @@ def test():
     #outputCategories() 
     printHouseObjects()       
         
-test()        
+#test()        
 
      
         
