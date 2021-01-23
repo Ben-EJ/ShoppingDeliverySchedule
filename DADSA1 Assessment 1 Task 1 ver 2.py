@@ -869,7 +869,7 @@ def outputDelivery():
             print(" ")
              
 outputScedule()        
-#outputDelivery()        
+outputDelivery()        
 
 #printshopObjectsTest()
 #outputCategories() 
