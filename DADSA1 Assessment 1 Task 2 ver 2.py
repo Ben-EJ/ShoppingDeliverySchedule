@@ -278,7 +278,7 @@ def inputCSVShoppingList(countHouseNamesWeeks):
         count = count + 1
         
         tempStorageItemQuantity = []
-        if (count > 15): # day counter is smaller than 7 days
+        if (count > 16): # if hits 16 houses sets week counter to week 2
             weekCounter = 2 # add week
     
         with open('DATA CWK SHOPPING DATA WEEK 4 FILE B.csv', 'r') as csv_file:
@@ -713,26 +713,25 @@ def matchCombinations(combinations, minimumCombos):
     return False # if it goes through all combinations and does not find a match return false
 
 #finds shops that will need to be visited by all houses
-def commonShopCombinations():
+def commonShopCombinations(getWeek):
     shoppingCountWeekOne = -1
     combinations = []
     for i in houseObjects:# for all houses
         shoppingCountWeekOne = shoppingCountWeekOne + 1
-        
-        minimumCombos = houseObjects[shoppingCountWeekOne].getMinimalCombinations()# get minimum combinations
-        
-        if(len(combinations) == 0):# if there are no shopping combinations in combination list
-            combinations.append(minimumCombos)# add first combination 
-        else:
-            combinationsCount = -1
-            matchCondition = False
-            matchCondition = matchCombinations(combinations, minimumCombos)# find a match 
-            if(matchCondition == True):# the moment it finds a match end iterate the loop by 1
-                continue
-            if(matchCondition == False):# if it never finds a match add to combinations
-                combinations.append(minimumCombos)
-                continue
-    print(combinations)                     
+        if (houseObjects[shoppingCountWeekOne].getWeek() == getWeek):
+            minimumCombos = houseObjects[shoppingCountWeekOne].getMinimalCombinations()# get minimum combinations        
+            if(len(combinations) == 0):# if there are no shopping combinations in combination list
+                combinations.append(minimumCombos)# add first combination 
+            else:
+                matchCondition = False
+                matchCondition = matchCombinations(combinations, minimumCombos)# find a match 
+                if(matchCondition == True):# the moment it finds a match end iterate the loop by 1
+                    continue
+                if(matchCondition == False):# if it never finds a match add to combinations
+                    combinations.append(minimumCombos)
+                    continue
+    print(combinations)      
+             
 def shoppingScedule():
     pass
 #outputs Shopping scedule
@@ -840,6 +839,7 @@ def outputCategories():
         print(catagoryObjects[count].getItemList())
         print("===================================================================") 
         print(" ")
+#Returns house objects that are in week 1
 
 #runs all other functions    
 def main():
@@ -858,7 +858,9 @@ def main():
     substitutions(2)
     recalculateMinShops()
     addDays()
-    commonShopCombinations()        
+    commonShopCombinations(1)     
+    commonShopCombinations(2)
+     
     #Scedule() # Implement for task 2  
             
     #outputScedule()   # Implement for task 2     
@@ -870,9 +872,8 @@ main()
 def test():      
     #printshopObjectsTest()
     #outputCategories() 
-    printHouseObjects()       
-        
-#test()        
+    printHouseObjects()             
+test()        
 
      
         
