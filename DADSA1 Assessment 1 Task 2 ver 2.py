@@ -732,8 +732,25 @@ def commonShopCombinations(getWeek):
                     continue
     print(combinations)      
              
-def shoppingScedule():
-    pass
+def shoppingScedule(week, weekCombinations):
+    if(len(weekCombinations) == 2 and len(weekCombinations[0]) == 2):
+        houseCount = -1
+        for i in houseObjects:# for each house
+            houseCount = houseCount + 1
+            if(houseObjects[houseCount].getWeek() == week):# if house is in week
+                dayCount = -1
+                for x in shoppingScheduleObjects:# for each day
+                    dayCount =  dayCount + 1
+                    if (houseObjects[houseCount].getMinimalCombinations()[0] == week1Combinations[0]):
+                            shoppingScheduleObjects[0].setShopToBuyFrom(weekCombinations[0][0])
+                            shoppingScheduleObjects[0].setShopingToBuy(houseObjects[shoppingCountWeekOne].getNeedToBuyShopA())
+                            shoppingScheduleObjects[0].setShoppingQuantities(houseObjects[shoppingCountWeekOne].getNeedToBuyShopAQuantities())
+                    if (houseObjects[houseCount].getMinimalCombinations()[1] == week1Combinations[1]):
+                            shoppingScheduleObjects[1].setShopToBuyFrom("B")
+                            shoppingScheduleObjects[1].setShopingToBuy(houseObjects[shoppingCountWeekOne].getNeedToBuyShopB())
+                            shoppingScheduleObjects[1].setShoppingQuantities(houseObjects[shoppingCountWeekOne].getNeedToBuyShopBQuantities())
+                    deliveryObjects[1].setDeliverySchedule(houseObjects[shoppingCountWeekOne].getHouseName())
+
 #outputs Shopping scedule
 def outputScedule():
     shoppingSceduleCount = -1
