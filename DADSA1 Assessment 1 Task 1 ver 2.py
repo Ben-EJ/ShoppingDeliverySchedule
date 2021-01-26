@@ -547,7 +547,7 @@ def Swap(itemsRequired,toAvoid,biggestShopItemList):
                 for n in catagoryObjects[catagoryCount].getItemList(): # loops through items finds a diffrent item in that catagory
                     catagoryItemToSwapWith = catagoryItemToSwapWith + 1
                     newItemStores = shopObjects[getItemNumber(catagoryObjects[catagoryCount].getItemList()[catagoryItemToSwapWith])].getItemStores() # gets items stores of new item
-                    if(catagoryObjects[catagoryCount].getItemList()[catagoryItemToSwapWith] !=  itemsRequired and newItemStores[0] == aBiggestShop or newItemStores[1] == bBiggestShop): # If can be bought from the shop with the most ammount of items
+                    if(catagoryObjects[catagoryCount].getItemList()[catagoryItemToSwapWith] !=  itemsRequired and newItemStores[0] == aBiggestShop or newItemStores[1] == bBiggestShop or newItemStores[2] == bBiggestShop or newItemStores[3] == bBiggestShop): # If can be bought from the shop with the most ammount of items
                         return catagoryObjects[catagoryCount].getItemList()[catagoryItemToSwapWith] # return new item
 
                         
@@ -587,7 +587,7 @@ Note:
 Unfortunetly the code in these if statements (if (smallestA == True), if (smallestB == True), if (smallestC == True))
 cant be put into functions as it appends to spesific lists. 
 """
-def substitutions(runNumber,houseCount):
+def substitutions(houseCount):
        
     itemsRequiredA = houseObjects[houseCount].getNeedToBuyShopA()
     itemsRequiredB = houseObjects[houseCount].getNeedToBuyShopB()
@@ -895,14 +895,14 @@ def main():
     for i in houseObjects:
         houseCount = houseCount + 1
         if (len(houseObjects[houseCount].getMinimalCombinations()) != 2):  # if house already has 2 shops only skip this itteration
-            substitutions(1,houseCount) # Implement for task 2
+            substitutions(houseCount) # Implement for task 2
     recalculateMinShops()
     
     houseCount2 = -1
     for i in houseObjects:
         houseCount2 = houseCount2 + 1
         if (len(houseObjects[houseCount2].getMinimalCombinations()) != 2):  # if house already has 2 shops only skip this itteration
-            substitutions(2, houseCount2) # Implement for task 2
+            substitutions(houseCount2) # Implement for task 2
     recalculateMinShops()
 
     addDays()

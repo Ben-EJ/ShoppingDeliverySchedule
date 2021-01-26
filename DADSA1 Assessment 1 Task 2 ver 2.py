@@ -537,7 +537,7 @@ Note:
 Unfortunetly the code in these if statements (if (smallestA == True), if (smallestB == True), if (smallestC == True))
 cant be put into functions as it appends to spesific lists. 
 """
-def substitutions(runNumber,houseCount):
+def substitutions(houseCount):
        
     itemsRequiredA = houseObjects[houseCount].getNeedToBuyShopA()
     itemsRequiredB = houseObjects[houseCount].getNeedToBuyShopB()
@@ -727,12 +727,14 @@ def addDays():
 # each week is split into two week periods 
 # the two sets of houses are created these are the main sets of shops    
 def mergeShopList(week, weekCombinations):
-    print(weekCombinations)
     listOfShops = []
-    if(len(weekCombinations) == 2 and len(weekCombinations[0]) == 2 and len(weekCombinations[1]) == 2):
-       for i in range(0,2):
-           for x in range(0,2):
-              listOfShops.append(weekCombinations[i][x])
+    weekCombinationsCount = -1
+    for i in weekCombinations:# for each shop set
+        weekCombinationsCount =  weekCombinationsCount + 1
+        weekCombinationsShopCount = -1
+        for x in weekCombinations[weekCombinationsCount]:# for each shop in set
+            weekCombinationsShopCount = weekCombinationsShopCount + 1
+            listOfShops.append(weekCombinations[weekCombinationsCount][weekCombinationsShopCount]) # append to new list
     return listOfShops
 
 def shoppingSceduleAddShops(week, listOfShops):
@@ -915,7 +917,7 @@ def outputCategories():
 
 #runs all other functions    
 def main():
-    print("DADSA Assignment one TASK 1") #Prints project title
+    print("DADSA Assignment one TASK 2") #Prints project title
     print(" ")
     inputCSVShopList() 
     countHouseNamesWeeks = inputCSVHouseNames()
@@ -930,14 +932,14 @@ def main():
     for i in houseObjects:
         houseCount = houseCount + 1
         if (len(houseObjects[houseCount].getMinimalCombinations()) != 2):  # if house already has 2 shops only skip this itteration
-            substitutions(1,houseCount) # Implement for task 2
+            substitutions(houseCount) # Implement for task 2
     recalculateMinShops()
     
     houseCount2 = -1
     for i in houseObjects:
         houseCount2 = houseCount2 + 1
         if (len(houseObjects[houseCount2].getMinimalCombinations()) != 2):  # if house already has 2 shops only skip this itteration
-            substitutions(2, houseCount2) # Implement for task 2
+            substitutions(houseCount2) # Implement for task 2
     recalculateMinShops()
 
     addDays()
