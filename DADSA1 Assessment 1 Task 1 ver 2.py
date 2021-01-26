@@ -96,7 +96,10 @@ class ShoppingLists:
         self.needToBuyShopB = needToBuyShopB
     def replaceNeedToBuyShopC(self, needToBuyShopC):
         self.needToBuyShopC = needToBuyShopC
-        
+
+    def replaceMinimalCombinations(self, minimalCombinations):
+        self.minimalCombinations = minimalCombinations
+
     def setNeedToBuyShopAQuantities(self, needToBuyShopAQuantities):
         self.needToBuyShopAQuantities.append(needToBuyShopAQuantities)
     def setNeedToBuyShopBQuantities(self, needToBuyShopBQuantities):
@@ -219,7 +222,7 @@ def inputCSVShopList():
             
             shopObjects.append(Item(row1[1],row1[2],shopList))
         
-inputCSVShopList()  
+ 
           
 def inputCSVHouseNames():
     with open('DATA CWK SHOPPING DATA WEEK 1 FILE B.csv', 'r') as csv_file2:
@@ -241,7 +244,7 @@ def inputCSVHouseNames():
                     output = countColumn # store contence in output
                 gotFirstLine = True # One the first line from csv has been obtained set to true
     return output         
-countHouseNamesWeeks = inputCSVHouseNames()
+
             
 def inputCSVShoppingList(countHouseNamesWeeks):
     count = 0     
@@ -269,76 +272,59 @@ def inputCSVShoppingList(countHouseNamesWeeks):
         
             houseObjects.append(ShoppingLists(countHouseNamesWeeks[count - 1],weekCounter, tempStorageItemQuantity)) # create object and add data
             
-inputCSVShoppingList(countHouseNamesWeeks)
+
 
 #this function splits an items name into a selection of key words stored in a list
 #the keywords are then looped through to 
+#this function splits an items name into a selection of key words, those key words are analised and then the item is catagorised and stored in a list(category)
 def categorySort():
     print("Category Sort")
     itemNumber = -1
     splitElementCount = -1
     splitItemName = []
     
-    itemCategoryBread = []
-    itemCategoryMilk = []
-    itemCategoryRice = []
-    itemCategoryButter = []
-    itemCategoryApples = []
-    itemCategoryOnions = []
+    categoryTempStoreage = { "Bread" : [], "Milk" : [], "Cheese" : [], "Tomatoes" : [], "Carrots" : [],
+    "Potatoes" : [], "Rice" : [], "Butter" : [], "Spread" : [],"Eggs" : [],"Apples" : [],"Onions" : [],
+    "Oranges" : [],"Kiwi" : [], "Kitchen" : [], "Toilet" : [], "Tea" : [], "Coffee" : [],"NoSubstatutes" : []}
     
+    categoryTempStoreageKey = ["Bread", "Milk", "Cheese", "Tomatoes", "Carrots",
+    "Potatoes", "Rice", "Butter", "Spread", "Eggs", "Apples", "Onions",
+    "Oranges", "Kiwi", "Kitchen", "Toilet", "Tea", "Coffee","NoSubstatutes"]
+
+    categoryTempStoreageLower = ["bread", "milk", "cheese", "tomatoes", "carrots",
+    "potatoes", "rice", "butter", "spread", "eggs", "apples", "onions",
+    "oranges", "kiwi", "kitchen", "toilet", "tea", "coffee","NoSubstatutes"]
+
     for i in shopObjects: # for each item
         itemNumber = itemNumber + 1
         itemName = shopObjects[itemNumber].getItemName() # Gets an items name
         splitItemName = itemName.split(' ') #Splits the item name into keywords
+        foundCatagory = False
         for x in splitItemName: #For each keyword 
+
             splitElementCount = splitElementCount + 1 
             # This next section of code tries to match one of those key words to a catagory.
             #for example if an item has bread as a keyword it's item number will be added to the bread category
-            if (splitItemName[splitElementCount] == "Bread" or splitItemName[splitElementCount] == "bread"):
-                itemCategoryBread.append(itemNumber)                               
+            catagoryTmpStoreKeyCount = -1
             
-                #this next line is for testing
-                #itemCategoryBread.append(shopObjects[itemNumber].getItemName())
-                
-            elif (splitItemName[splitElementCount] == "Milk" or splitItemName[splitElementCount] == "milk"):
-                itemCategoryMilk.append(itemNumber) 
-                
-                #this next line is for testing
-                #itemCategoryMilk.append(shopObjects[itemNumber].getItemName())
-                
-            elif (splitItemName[splitElementCount] == "Rice" or splitItemName[splitElementCount] == "rice"):
-                itemCategoryRice.append(itemNumber) 
-                
-                #this next line is for testing
-                #itemCategoryRice.append(shopObjects[itemNumber].getItemName())
-                
-            elif (splitItemName[splitElementCount] == "Butter" or splitItemName[splitElementCount] == "butter"):
-                itemCategoryButter.append(itemNumber)
-                
-                #this next line is for testing
-                #itemCategoryButter.append(shopObjects[itemNumber].getItemName())
-                
-            elif (splitItemName[splitElementCount] == "Apples" or splitItemName[splitElementCount] == "apples"):
-                itemCategoryApples.append(itemNumber) 
-                
-                #this next line is for testing
-                #itemCategoryApples.append(shopObjects[itemNumber].getItemName())
-                
-            elif (splitItemName[splitElementCount] == "Onions" or splitItemName[splitElementCount] == "onions"):
-                itemCategoryOnions.append(itemNumber)
-                
-                #this next line is for testing
-                #itemCategoryOnions.append(shopObjects[itemNumber].getItemName())
-        splitElementCount = -1 
-        
-    catagoryObjects.append(Catagories("Bread", itemCategoryBread))
-    catagoryObjects.append(Catagories("Milk", itemCategoryMilk))
-    catagoryObjects.append(Catagories("Rice", itemCategoryRice))
-    catagoryObjects.append(Catagories("Butter", itemCategoryButter))
-    catagoryObjects.append(Catagories("Apples", itemCategoryApples))
-    catagoryObjects.append(Catagories("Onions", itemCategoryOnions))
+            for i in categoryTempStoreageKey:
+                catagoryTmpStoreKeyCount = catagoryTmpStoreKeyCount + 1
+                if (splitItemName[splitElementCount] == categoryTempStoreageKey[catagoryTmpStoreKeyCount] or splitItemName[splitElementCount] == categoryTempStoreageLower[catagoryTmpStoreKeyCount]):
+                    #categoryTempStoreage[categoryTempStoreageKey[catagoryTmpStoreKeyCount]].append(itemNumber)                               
+                    #this next line is for testing
+                    categoryTempStoreage[categoryTempStoreageKey[catagoryTmpStoreKeyCount]].append(shopObjects[itemNumber].getItemName())
+                    foundCatagory = True
+       
+        if(foundCatagory == False):# If in no catagory put in NoSubstatutes
+            categoryTempStoreage["NoSubstatutes"].append(shopObjects[itemNumber].getItemName()) 
+         
+        splitElementCount = -1    
+    countClassInput = -1 
+    for i in categoryTempStoreageKey:
+        countClassInput = countClassInput + 1
+        catagoryObjects.append(Catagories(categoryTempStoreageKey[countClassInput], categoryTempStoreage[categoryTempStoreageKey[countClassInput]]))
     
-categorySort() 
+
   
 def giveItemNumber():
     itemNumber = -1
@@ -346,7 +332,7 @@ def giveItemNumber():
         itemNumber = itemNumber + 1
         shopObjects[itemNumber].setItemNumber(itemNumber)
         
-giveItemNumber()               
+              
 # prints out data from each object in shopObjects
 def printshopObjectsTest():
     count = -1
@@ -439,7 +425,7 @@ def replace():
         tempHouseList = RemoveBlank(houseObjects[countHouseObjects].getItemList()) # remove the blank spots in a list in itemStores(array) in houseObjects and store in temp variable
         houseObjects[countHouseObjects].setItemList(tempHouseList)  # update list in itemStores(array) in houseObjects using data from tempHouseList variable
         tempHouseList = [] # clear the list for the next set of data
-replace()
+
 
 # Checks to see what stores a spesific item is in.
 def inStore(item):
@@ -493,22 +479,23 @@ def proccess():
     tempProccessed = []
     combination = []
     
-    for i in houseObjects:
+    for i in houseObjects:# for all houses
         mainCounter = mainCounter + 1
-        tempItemListStorage = houseObjects[mainCounter].getItemList()
+        tempItemListStorage = houseObjects[mainCounter].getItemList()# item required items list
         tempItemListStorage.pop()# Pops the strange ellipsis thing
-        for i in tempItemListStorage:
+        for i in tempItemListStorage:# for each item
             itemListCounter = itemListCounter + 1
             
-            if (int(tempItemListStorage[itemListCounter]) > 0):
-               canBeFoundInStore = inStore(itemListCounter)
-               tempProccessed.append(canBeFoundInStore)
+            if (int(tempItemListStorage[itemListCounter]) > 0):# if need to buy item I.E the quantity is greater than 0
+               canBeFoundInStore = inStore(itemListCounter)# get the store the item can be bought from
+               tempProccessed.append(canBeFoundInStore)# append store to list
                
-               itemName = shopObjects[itemListCounter].getItemName()
+               itemName = shopObjects[itemListCounter].getItemName()# get the items name
                
-               if (canBeFoundInStore == "A"):                   
-                   houseObjects[mainCounter].setNeedToBuyShopA(itemName) 
-                   houseObjects[mainCounter].setNeedToBuyShopAQuantities(tempItemListStorage[itemListCounter])
+               if (canBeFoundInStore == "A"):# if it can be found in store A                  
+                   houseObjects[mainCounter].setNeedToBuyShopA(itemName) # add item to the list if items needed to buy from shop A 
+                   houseObjects[mainCounter].setNeedToBuyShopAQuantities(tempItemListStorage[itemListCounter])# add quantity to the list if items needed to buy from shop A
+                 # each of these if statements is the same as for shop D but obviously appends to there diffrent respective item lists 
                elif(canBeFoundInStore == "B"):
                    houseObjects[mainCounter].setNeedToBuyShopB(itemName) 
                    houseObjects[mainCounter].setNeedToBuyShopBQuantities(tempItemListStorage[itemListCounter])
@@ -518,209 +505,246 @@ def proccess():
                    houseObjects[mainCounter].setNeedToBuyShopCQuantities(tempItemListStorage[itemListCounter])
                    
                    
-        combination = minimumStores(tempProccessed)
-        houseObjects[mainCounter].setStoreCombinations(combination)
-        tempProccessed = []
+        combination = minimumStores(tempProccessed)# find minimum combination
+        houseObjects[mainCounter].setStoreCombinations(combination)# set a houses minimum store combinations
+        tempProccessed = []# reset list
         itemListCounter = -1
     combination = []
     
     
-proccess()
 
-def substitutions():
-   
+
+def getItemNumber(item):
+    ShopItemNumber = -1
+    for m in shopObjects:# for all items
+        ShopItemNumber =  ShopItemNumber + 1 # this number is the item number
+        if (shopObjects[ShopItemNumber].getItemName() == item):# if items name found in shops is the same as the item being tested
+            return ShopItemNumber # return its item number
+            
+#Handles Substitutions: item swapping
+def Swap(itemsRequired,toAvoid,biggestShopItemList):
+    newItem = ""
+    catagoryCount = -1
+    aBiggestShop = ""
+    bBiggestShop = ""
+    cBiggestShop = ""
+    if(biggestShopItemList == "A"): # if house requires the most items from A
+        aBiggestShop = "Y"
+    elif(biggestShopItemList == "B"): # if house requires the most items from B
+        bBiggestShop = "Y"
+    elif(biggestShopItemList == "C"): # if house requires the most items from C
+        cBiggestShop = "Y"
+
+    for x in catagoryObjects:#for each catagory
+        catagoryCount = catagoryCount + 1
+        eachItemCountCat = -1
+        for z in catagoryObjects[catagoryCount].getItemList(): #for each item in catagory
+            eachItemCountCat = eachItemCountCat + 1            
+            if(itemsRequired == catagoryObjects[catagoryCount].getItemList()[eachItemCountCat]): # if the item is found in that catagory 
+                if(catagoryObjects[catagoryCount].getCatagoryName() == "NoSubstatutes"): # if the item does not have a catagory just return it to be re sorted
+                    return itemsRequired # Return same item
+                catagoryItemToSwapWith = -1 
+                for n in catagoryObjects[catagoryCount].getItemList(): # loops through items finds a diffrent item in that catagory
+                    catagoryItemToSwapWith = catagoryItemToSwapWith + 1
+                    newItemStores = shopObjects[getItemNumber(catagoryObjects[catagoryCount].getItemList()[catagoryItemToSwapWith])].getItemStores() # gets items stores of new item
+                    if(catagoryObjects[catagoryCount].getItemList()[catagoryItemToSwapWith] !=  itemsRequired and newItemStores[0] == aBiggestShop or newItemStores[1] == bBiggestShop): # If can be bought from the shop with the most ammount of items
+                        return catagoryObjects[catagoryCount].getItemList()[catagoryItemToSwapWith] # return new item
+
+                        
+                        
+# Called to update required item lists for a given house hold                
+def updateItems(houseCount,itemsRequiredA,itemsRequiredB,itemsRequiredC):
+     houseObjects[houseCount].replaceNeedToBuyShopA(itemsRequiredA)
+     houseObjects[houseCount].replaceNeedToBuyShopB(itemsRequiredB)
+     houseObjects[houseCount].replaceNeedToBuyShopC(itemsRequiredC)
+
+# Called to update item quantities for a given house hold
+def updateQuantities(houseCount,itemsRequiredAQuantities,itemsRequiredBQuantities,itemsRequiredCQuantities):
+     houseObjects[houseCount].replaceNeedToBuyShopAQuantities(itemsRequiredAQuantities)
+     houseObjects[houseCount].replaceNeedToBuyShopBQuantities(itemsRequiredBQuantities)
+     houseObjects[houseCount].replaceNeedToBuyShopCQuantities(itemsRequiredCQuantities)
+  
+#comment
+def smallestGreaterThanZero(num1,num2,num3):
+    constHigh = 1000 # high value to be set
+    if(num1 == 0):
+        num1 = constHigh # sets high value so will never be picked
+    if(num2 == 0):
+        num2 = constHigh # sets high value so will never be picked
+    if(num3 == 0):
+        num3 = constHigh # sets high value so will never be picked
+    
+    minimum = min(num1,num2,num3)
+    return minimum
+
+def biggestShop(num1,num2,num3):
+   biggestValue = max(num1,num2,num3)
+   return biggestValue
+
+#This function deals with selecting which item lists need to be substatuted 
+"""
+Note:
+Unfortunetly the code in these if statements (if (smallestA == True), if (smallestB == True), if (smallestC == True))
+cant be put into functions as it appends to spesific lists. 
+"""
+def substitutions(runNumber,houseCount):
+       
+    itemsRequiredA = houseObjects[houseCount].getNeedToBuyShopA()
+    itemsRequiredB = houseObjects[houseCount].getNeedToBuyShopB()
+    itemsRequiredC = houseObjects[houseCount].getNeedToBuyShopC()
+    
+    itemsRequiredAQuantities = houseObjects[houseCount].getNeedToBuyShopAQuantities()
+    itemsRequiredBQuantities = houseObjects[houseCount].getNeedToBuyShopBQuantities()
+    itemsRequiredCQuantities = houseObjects[houseCount].getNeedToBuyShopCQuantities()
+
+    biggestShopItemList = ""
+
+    smallestA = False
+    smallestB = False
+    smallestC = False
+
+    sizeOfA = len(itemsRequiredA)
+    sizeOfB = len(itemsRequiredB)
+    sizeOfC = len(itemsRequiredC)
+
+    biggestNumber = biggestShop(sizeOfA,sizeOfB,sizeOfC)#gets the shopping list with the highest ammount of items that need to be bought 
+    smallestNumber = smallestGreaterThanZero(len(itemsRequiredA),len(itemsRequiredB),len(itemsRequiredC))#gets the shopping list with the smallest ammount of items that need to be bought 
+
+    if(sizeOfA == smallestNumber):# if a shopping list is the smallest then;
+        smallestA = True
+    elif(sizeOfB == smallestNumber):# if b shopping list is the smallest then;        
+        smallestB = True
+    elif(sizeOfC == smallestNumber):# if c shopping list is the smallest then;
+        smallestC = True
+
+    
+    if(sizeOfA == biggestNumber):# if a shopping list is the biggest then;
+        biggestShopItemList = "A"
+    elif(sizeOfB == biggestNumber):# if b shopping list is the biggest then;         
+        biggestShopItemList = "B"
+    elif(sizeOfC == biggestNumber):# if c shopping list is the biggest then;
+        biggestShopItemList = "C"
+
+    if (smallestA == True):# if a is the smallest
+        oldItemAmmountA = -1 
+        newItemsA = []
+        for i in itemsRequiredA:#for all items required from shop a 
+            oldItemAmmountA = oldItemAmmountA + 1
+            newItemsA.append(Swap(itemsRequiredA[oldItemAmmountA],"A",biggestShopItemList))# send the item to swap item for a new item to be found and append to new items list
+        newItemCountA = -1
+        for x in newItemsA: # for each new item found (sort into new shopping list)
+            newItemCountA = newItemCountA + 1
+            
+            itemNumberNewItemA = getItemNumber(str(newItemsA[newItemCountA])) # gets item number of new item
+            if(shopObjects[itemNumberNewItemA].getItemStores()[1] == "Y"):# if the item is in store B
+                itemsRequiredB.append(newItemsA[newItemCountA])# add item to Store B shopping list
+                itemsRequiredBQuantities.append(itemsRequiredAQuantities[newItemCountA])# add item quantity to Store D shopping list
+            
+            
+            elif(shopObjects[itemNumberNewItemA].getItemStores()[2] == "Y" and len(itemsRequiredA) > 0):# if the item is in store C
+                itemsRequiredC.append(newItemsA[newItemCountA])# add item to Store C shopping list
+                itemsRequiredCQuantities.append(itemsRequiredAQuantities[newItemCountA])# add item quantity to Store C shopping list
+        itemsRequiredA = []# Wipe items required from shop A
+        itemsRequiredAQuantities = []# Wipe item quantities required from shop A quantities
+        updateItems(houseCount,itemsRequiredA,itemsRequiredB,itemsRequiredC,itemsRequiredD)# update these lists  
+        updateQuantities(houseCount,itemsRequiredAQuantities,itemsRequiredBQuantities,itemsRequiredCQuantities,itemsRequiredDQuantities)# update these lists
+
+    # Most of the code is repeated from here in this function, read note above function why this can't be put into functions
+    if (smallestB == True):# if b is the smallest
+        oldItemAmmountB = -1 
+        newItemsB = []
+        for i in itemsRequiredB:
+            oldItemAmmountB = oldItemAmmountB + 1
+            newItemsB.append(Swap(itemsRequiredB[oldItemAmmountB],"B",biggestShopItemList))
+        newItemCountB = -1
+        for x in newItemsB:
+            newItemCountB = newItemCountB + 1
+            
+            itemNumberNewItemB = getItemNumber(str(newItemsB[newItemCountB]))
+                
+            if(shopObjects[itemNumberNewItemB].getItemStores()[0] == "Y"):
+                itemsRequiredA.append(newItemsB[newItemCountB])
+                itemsRequiredAQuantities.append(itemsRequiredBQuantities[newItemCountB])
+            
+            
+            elif(shopObjects[itemNumberNewItemB].getItemStores()[1] == "Y" and len(itemsRequiredC) > 0):
+                itemsRequiredB.append(newItemsB[newItemCountB])
+                itemsRequiredBQuantities.append(itemsRequiredBQuantities[newItemCountB])
+        itemsRequiredB = []
+        itemsRequiredBQuantities = []
+        updateItems(houseCount,itemsRequiredA,itemsRequiredB,itemsRequiredC,itemsRequiredD)
+        updateQuantities(houseCount,itemsRequiredAQuantities,itemsRequiredBQuantities,itemsRequiredCQuantities,itemsRequiredDQuantities)
+
+    if (smallestC == True):# if c is the smallest
+        oldItemAmmount = -1 
+        newItems = []
+        for i in itemsRequiredC:
+            oldItemAmmount = oldItemAmmount + 1
+            newItems.append(Swap(itemsRequiredC[oldItemAmmount],"C",biggestShopItemList))
+        newItemCount = -1
+        for x in newItems:
+            newItemCount = newItemCount + 1
+            itemNumberNewItem = getItemNumber(newItems[newItemCount])
+                
+            if(shopObjects[itemNumberNewItem].getItemStores()[0] == "Y"):
+                itemsRequiredA.append(newItems[newItemCount])
+                itemsRequiredAQuantities.append(itemsRequiredCQuantities[newItemCount])
+            
+            elif(shopObjects[itemNumberNewItem].getItemStores()[1] == "Y"):
+                itemsRequiredB.append(newItems[newItemCount])
+                itemsRequiredBQuantities.append(itemsRequiredCQuantities[newItemCount])
+        itemsRequiredC = []
+        itemsRequiredCQuantities = []
+        updateItems(houseCount,itemsRequiredA,itemsRequiredB,itemsRequiredC)
+        updateQuantities(houseCount,itemsRequiredAQuantities,itemsRequiredBQuantities,itemsRequiredCQuantities)
+
+#This function re-calculates the minimum shops required to visit by each house hold after the subsitution function has been run                                                    
+def recalculateMinShops():
     houseCount = -1
-     
-   
     for i in houseObjects:
         houseCount = houseCount + 1
-       
-        houseObjectRequiredShops = houseObjects[houseCount].getMinimalCombinations()
-        
-        itemsRequiredA = houseObjects[houseCount].getNeedToBuyShopA()
-        itemsRequiredB = houseObjects[houseCount].getNeedToBuyShopB()
-        itemsRequiredC = houseObjects[houseCount].getNeedToBuyShopC()
-        
-        itemsRequiredAQuantities = houseObjects[houseCount].getNeedToBuyShopAQuantities()
-        itemsRequiredBQuantities = houseObjects[houseCount].getNeedToBuyShopBQuantities()
-        itemsRequiredCQuantities = houseObjects[houseCount].getNeedToBuyShopCQuantities()
-        
-        shopCount = -1 
-        for x in houseObjectRequiredShops:
-            shopCount = shopCount + 1
-            if (houseObjectRequiredShops[shopCount] == 'A'):
-                if(len(itemsRequiredA) < len(itemsRequiredB) and len(itemsRequiredA) < len(itemsRequiredC) or len(itemsRequiredA) < 2):
+        completeMinimumStores = []
+        if (len(houseObjects[houseCount].getNeedToBuyShopA()) > 0):# if house requires items from shop A
+            completeMinimumStores.append("A") # add A to shop required list
+        if (len(houseObjects[houseCount].getNeedToBuyShopB()) > 0):
+            completeMinimumStores.append("B")
+        if (len(houseObjects[houseCount].getNeedToBuyShopC()) > 0):
+            completeMinimumStores.append("C")
+        houseObjects[houseCount].replaceMinimalCombinations(completeMinimumStores)# update each house hold object to reflect these changes
+#This function finds out if a houses minimum combination is already in combinations.      
+def matchCombinations(combinations, minimumCombos):
+    combinationCount = -1
+    for n in combinations:# for all combinations
+        combinationCount = combinationCount + 1
+        combinationShopCount = -1
+        match = 0
+        for x in combinations[combinationCount]:# for each shop in combination
+            combinationShopCount = combinationShopCount + 1
+            if (minimumCombos[combinationShopCount] == combinations[combinationCount][combinationShopCount]):# if a shop is in both minimum combination and combination
+                    match = match + 1 # increment how many matches there have been
+            if(match == len(combinations[combinationCount])):# if both shops match 
+                return True # return true
+    return False # if it goes through all combinations and does not find a match return false
 
-                    itemNumberA = -1 
-                    itemsRequiredAAmmount = -1
-                    for i in shopObjects:
-                        itemNumberA = itemNumberA + 1
-                        itemsRequiredAAmmount = -1
-                        for i in itemsRequiredA:
-                            itemsRequiredAAmmount = itemsRequiredAAmmount + 1
-                            if (shopObjects[itemNumberA].getItemName() == itemsRequiredA[itemNumberA]):
-                              
-                              
-                              # next section of code finds alternative item
-                              catagoryCountA = -1
-                              itemListA = []
-                              for i in catagoryObjects:
-                                   catagoryCountA = catagoryCountA + 1
-                                   itemListA = catagoryObjects[catagoryCountA].getItemList()
-                                    
-                                   itemNumInCatagoryListA = -1
-                                   for i in itemListA: # for each item in catagory 
-                                       itemNumInCatagoryListA = itemNumInCatagoryListA + 1
-                                        
-                                       if (itemListA[itemNumInCatagoryListA] == itemNumberA): #if item is found in catagory
-                                           WhatItemA = -1
-                                           for i in itemListA: # for each item in catagory 
-                                               WhatItemA = WhatItemA + 1
-                                               if (itemListA[WhatItemA] != itemNumberA): # if you find an item that isnt the item we want to replace                                                   
-                                                   
-                                                   if (shopObjects[WhatItemA].getItemStores()[1] == "Y"): # and it can be bought in shop B
-                                                      
-                                                       houseCombosToEdit = houseObjects[houseCount].getMinimalCombinations()
-                                                       houseCombosToEdit.remove("A")
-                                                       houseObjects[houseCount].setStoreCombinations(houseCombosToEdit) 
-                                                       itemsRequiredA.pop(itemsRequiredAAmmount)
-                                                       houseObjects[houseCount].replaceNeedToBuyShopA(itemsRequiredA)
-                                                       houseObjects[houseCount].setNeedToBuyShopB(shopObjects[itemListA[WhatItemA]].getItemName())
-                                                       
-                                                       save1 = itemsRequiredAQuantities.pop(itemsRequiredAAmmount)
-                                                       houseObjects[houseCount].replaceNeedToBuyShopAQuantities(itemsRequiredAQuantities)
-                                                       houseObjects[houseCount].setNeedToBuyShopBQuantities(save1)
-                                                       
-                                                       
-                                                   elif(shopObjects[WhatItemA].getItemStores()[2] == "Y"):# and it can be bought in shop C
-                                                         
-                                                        houseCombosToEdit = houseObjects[houseCount].getMinimalCombinations()
-                                                        houseCombosToEdit.remove("A")
-                                                        houseObjects[houseCount].setStoreCombinations(houseCombosToEdit)
-                                                        itemsRequiredA.pop(itemsRequiredAAmmount)
-                                                        houseObjects[houseCount].replaceNeedToBuyShopA(itemsRequiredA)
-                                                        houseObjects[houseCount].setNeedToBuyShopC(shopObjects[itemListA[WhatItemA]].getItemName())
-                                                        
-                                                        save2 = itemsRequiredAQuantities.pop(itemsRequiredAAmmount)
-                                                        houseObjects[houseCount].replaceNeedToBuyShopAQuantities(itemsRequiredA)
-                                                        houseObjects[houseCount].setNeedToBuyShopCQuantities(save2)
-                                                     
-                        itemsRequiredAAmmount = -1
-                
-                  
-            elif (houseObjectRequiredShops[shopCount] == 'B'):
-                if(len(itemsRequiredB) < len(itemsRequiredA) and len(itemsRequiredB) < len(itemsRequiredC) or len(itemsRequiredB) < 2):
-                    itemNumberB = -1
-                    for i in shopObjects: # for each item
-                        itemNumberB = itemNumberB + 1
-                        itemsRequiredBAmmount = -1
-                        for i in itemsRequiredB: # for each item required from shop B
-                            itemsRequiredBAmmount = itemsRequiredBAmmount  + 1
-                          
-                            if (shopObjects[itemNumberB].getItemName() == itemsRequiredB[itemsRequiredBAmmount]): # if the item we need to buy is in shop list then
-                               
-                                # next section of code finds alternative item
-                                catagoryCountB = -1
-                                itemListB = []
-                                for i in catagoryObjects:
-                                    catagoryCountB = catagoryCountB + 1
-                                    itemListB = catagoryObjects[catagoryCountB].getItemList()
-                                    
-                                    itemNumInCatagoryListB = -1
-                                    for i in itemListB: # for each item in catagory 
-                                        itemNumInCatagoryListB = itemNumInCatagoryListB + 1
-                                        
-                                        if (itemListB[itemNumInCatagoryListB] == itemNumberB): #if item is found in catagory
-                                            WhatItemB = -1
-                                            for i in itemListB: # for each item in catagory 
-                                                WhatItemB = WhatItemB + 1
-                                                if (itemListB[WhatItemB] != itemNumberB): # if you find an item that isnt the item we want to replace                                                   
-                                                    
-                                                    if (shopObjects[WhatItemB].getItemStores()[0] == "Y"): # and it can be bought in shop A
-                                                        
-                                                        houseCombosToEdit = houseObjects[houseCount].getMinimalCombinations()
-                                                        houseCombosToEdit.remove("B")
-                                                        houseObjects[houseCount].setStoreCombinations(houseCombosToEdit) 
-                                                       
-                                                        itemsRequiredB.pop(itemsRequiredBAmmount)#remove item
-                                                        houseObjects[houseCount].replaceNeedToBuyShopB(itemsRequiredB)# Update item list
-                                                        houseObjects[houseCount].setNeedToBuyShopA(shopObjects[itemListB[WhatItemB]].getItemName())# add replacement to list
-                                                        
-                                                        save3 = itemsRequiredBQuantities.pop(itemsRequiredBAmmount)
-                                                        houseObjects[houseCount].replaceNeedToBuyShopAQuantities(itemsRequiredBQuantities)
-                                                        houseObjects[houseCount].setNeedToBuyShopAQuantities(save3)
-                                                        break
-                                                    elif(shopObjects[WhatItemB].getItemStores()[2] == "Y"):# and it can be bought in shop C
-                                                         
-                                                         houseCombosToEdit = houseObjects[houseCount].getMinimalCombinations()
-                                                         houseCombosToEdit.remove("B")
-                                                         houseObjects[houseCount].setStoreCombinations(houseCombosToEdit)
-                                                         itemsRequiredB.pop(itemsRequiredBAmmount)#remove item
-                                                         houseObjects[houseCount].replaceNeedToBuyShopB(itemsRequiredB)# Update item list
-                                                         houseObjects[houseCount].setNeedToBuyShopC(shopObjects[itemListB[WhatItemB]].getItemName())
-                                                         
-                                                         save4 = itemsRequiredBQuantities.pop(itemsRequiredBAmmount)
-                                                         houseObjects[houseCount].replaceNeedToBuyShopBQuantities(itemsRequiredBQuantities)
-                                                         houseObjects[houseCount].setNeedToBuyShopCQuantities(save4)
-                                                         break
-    
-                            itemsRequiredBAmmount = -1
-                                                        
-            elif (houseObjectRequiredShops[shopCount] == 'C'):
-                if(len(itemsRequiredC) < len(itemsRequiredB) and len(itemsRequiredC) < len(itemsRequiredA) or len(itemsRequiredC) < 2):
-                    itemNumberC = -1
-                    for i in shopObjects:
-                        itemNumberC = itemNumberC + 1
-                        itemsRequiredCAmmount = -1
-                        for x in itemsRequiredC:
-                            itemsRequiredCAmmount = itemsRequiredCAmmount + 1
-                            
-                            if (shopObjects[itemNumberC].getItemName() == itemsRequiredC[itemsRequiredCAmmount]):
-                                
-                                # next section of code finds alternative item
-                                catagoryCount = -1
-                                itemList = []
-                                for i in catagoryObjects:
-                                    catagoryCount = catagoryCount + 1
-                                    itemList = catagoryObjects[catagoryCount].getItemList()
-                                    
-                                    itemNumInCatagoryList = -1
-                                    for i in itemList:
-                                        itemNumInCatagoryList = itemNumInCatagoryList + 1
-                                        if (itemList[itemNumInCatagoryList] == itemNumberC): #if item is found in that list
-                                            WhatItem = -1
-                                            for i in itemList:
-                                                WhatItem = WhatItem + 1
-                                                if (itemList[WhatItem] != itemNumberC ):                                                    
-                                                    if (shopObjects[WhatItem].getItemStores()[0] == "Y"):
-                                                        houseCombosToEdit = houseObjects[houseCount].getMinimalCombinations()
-                                                        houseCombosToEdit.remove("C")
-                                                        houseObjects[houseCount].setStoreCombinations(houseCombosToEdit) 
-                                                        itemsRequiredC.pop(itemsRequiredCAmmount)#remove item
-                                                        houseObjects[houseCount].replaceNeedToBuyShopC(itemsRequiredC)
-                                                        houseObjects[houseCount].setNeedToBuyShopA(shopObjects[itemList[WhatItem]].getItemName())
-                                                        
-                                                        save5 = itemsRequiredCQuantities.pop(itemsRequiredCAmmount)
-                                                        houseObjects[houseCount].replaceNeedToBuyShopCQuantities(itemsRequiredCQuantities)
-                                                        houseObjects[houseCount].setNeedToBuyShopAQuantities(save5)
-                                                      
-                                                        break
-                                                    elif(shopObjects[WhatItem].getItemStores()[1] == "Y"):
-                                                                                                                
-                                                        houseCombosToEdit = houseObjects[houseCount].getMinimalCombinations()
-                                                        houseCombosToEdit.remove("C")
-                                                        itemsRequiredC.pop(itemsRequiredCAmmount)#remove item
-                                                        houseObjects[houseCount].replaceNeedToBuyShopC(itemsRequiredC)
-                                                        houseObjects[houseCount].setNeedToBuyShopB(shopObjects[itemList[WhatItem]].getItemName())
-                                                        
-                                                        save6 = itemsRequiredCQuantities.pop(itemsRequiredCAmmount)
-                                                        houseObjects[houseCount].replaceNeedToBuyShopCQuantities(itemsRequiredCQuantities)
-                                                        houseObjects[houseCount].setNeedToBuyShopBQuantities(save6)
-                                                        break
-                        itemsRequiredCAmmount = -1
-                            
-
-substitutions()
+#finds shops that will need to be visited by all houses
+def commonShopCombinations(getWeek):
+    shoppingCountWeekOne = -1
+    combinations = []
+    for i in houseObjects:# for all houses
+        shoppingCountWeekOne = shoppingCountWeekOne + 1
+        if (houseObjects[shoppingCountWeekOne].getWeek() == getWeek):
+            minimumCombos = houseObjects[shoppingCountWeekOne].getMinimalCombinations()# get minimum combinations        
+            if(len(combinations) == 0):# if there are no shopping combinations in combination list
+                combinations.append(minimumCombos)# add first combination 
+            else:
+                matchCondition = False
+                matchCondition = matchCombinations(combinations, minimumCombos)# find a match 
+                if(matchCondition == True):# the moment it finds a match end iterate the loop by 1
+                    continue
+                if(matchCondition == False):# if it never finds a match add to combinations
+                    combinations.append(minimumCombos)
+                    continue
+    return combinations  
 
 #Adds days to scedule/Generates raw schedule with no deliverys or shopping trips
 def addDays():
@@ -734,87 +758,74 @@ def addDays():
             
         shoppingScheduleObjects.append(ShoppingSchedule(dayCount,weekCount))#Adds days 
         deliveryObjects.append(Delivery(dayCount,weekCount))#Adds days
-addDays()
+#function merges all shops required to visit into one list
+# each week is split into two week periods 
+# the two sets of houses are created these are the main sets of shops    
+def mergeShopList(week, weekCombinations):
+    listOfShops = []
+    weekCombinationsCount = -1
+    for i in weekCombinations:# for each shop set
+        weekCombinationsCount =  weekCombinationsCount + 1
+        weekCombinationsShopCount = -1
+        for x in weekCombinations[weekCombinationsCount]:# for each shop in set
+            weekCombinationsShopCount = weekCombinationsShopCount + 1
+            listOfShops.append(weekCombinations[weekCombinationsCount][weekCombinationsShopCount]) # append to new list
+    return listOfShops
+# this function pre adds all shops to the shopping list
+def shoppingSceduleAddShops(week, listOfShops):
+    listOfshopCount = -1
+    for z in listOfShops: # for each shop 
+        listOfshopCount = listOfshopCount + 1
+        shoppingScheduleCount = -1
+        for b in shoppingScheduleObjects:# for each day in shopping list
+            shoppingScheduleCount = shoppingScheduleCount + 1
+            if(shoppingScheduleObjects[shoppingScheduleCount].getWeekShoppingSchedule() == week):# only append to the shopping list in the week spesified 
+                if(shoppingScheduleObjects[shoppingScheduleCount].getShopToBuyFrom() == ""): # if the shop to buy field is blank then
+                    shoppingScheduleObjects[shoppingScheduleCount].setShopToBuyFrom(listOfShops[listOfshopCount])# set shop
+                    break
 
-def Scedule():
-    shoppingCountWeekOne = -1
+# gets shopping list from shop class based on which shop is parsed in 
+def getShoppingFromShop(shop, houseCount):
+    if (shop == "A"):
+       return houseObjects[houseCount].getNeedToBuyShopA()
+    elif (shop == "B"):
+       return houseObjects[houseCount].getNeedToBuyShopB()
+    elif (shop == "C"):
+       return houseObjects[houseCount].getNeedToBuyShopC()
+    else:
+        print("Error no shop selected in 'getShoppingFromShop' function")
+# gets shopping quantity list from shop class based on which shop is parsed in 
+def getShoppingFromShopQuantities(shop, houseCount):
+    if (shop == "A"):
+       return houseObjects[houseCount].getNeedToBuyShopAQuantities()
+    elif (shop == "B"):
+       return houseObjects[houseCount].getNeedToBuyShopBQuantities()
+    elif (shop == "C"):
+       return houseObjects[houseCount].getNeedToBuyShopCQuantities()
+    else:
+        print("Error no shop selected in 'getShoppingFromShop' function")
 
+#creates shopping list using all data gathered
+def shoppingSceduleShoppingSort(week):
+    houseObjectsCount = -1
+    for i in houseObjects:# for each house
+        houseObjectsCount = houseObjectsCount + 1
+        shoppingScheduleObjectsCount = -1
+        if (houseObjects[houseObjectsCount].getWeek() == week):# if the house is in the week spesified 
+            for x in shoppingScheduleObjects:# for each day in shopping scedule
+                shoppingScheduleObjectsCount = shoppingScheduleObjectsCount + 1
+                if (shoppingScheduleObjects[shoppingScheduleObjectsCount].getWeekShoppingSchedule() == week):# if shoppng scedule day is in the week spesified 
+                    # (code bellow this) if houses required for each house match the shopping schedule houses then add both the items and item quantity to it
+                    if(houseObjects[houseObjectsCount].getMinimalCombinations()[0] == shoppingScheduleObjects[shoppingScheduleObjectsCount].getShopToBuyFrom() and houseObjects[houseObjectsCount].getMinimalCombinations()[1] == shoppingScheduleObjects[shoppingScheduleObjectsCount + 1].getShopToBuyFrom()):
+                        shoppingScheduleObjects[shoppingScheduleObjectsCount].setShopingToBuy(getShoppingFromShop(houseObjects[houseObjectsCount].getMinimalCombinations()[0], houseObjectsCount))
+                        shoppingScheduleObjects[shoppingScheduleObjectsCount + 1].setShopingToBuy(getShoppingFromShop(houseObjects[houseObjectsCount].getMinimalCombinations()[1], houseObjectsCount))
 
-    for i in houseObjects:
-        shoppingCountWeekOne = shoppingCountWeekOne + 1
-        
-        minimumCombos = houseObjects[shoppingCountWeekOne].getMinimalCombinations()
-        
-        minimumCombosCount = -1
-        
-        comboA = False
-        comboB = False
-        comboC = False
-        
-        for x in minimumCombos: 
-            minimumCombosCount = minimumCombosCount + 1
-            if(minimumCombos[minimumCombosCount] == 'A'):
-                comboA = True
-            elif(minimumCombos[minimumCombosCount] == 'B'): 
-                comboB = True
-            elif(minimumCombos[minimumCombosCount] == 'C'):
-                comboC = True
-                
-        if(comboA == True and comboB == True or comboA == True or comboB == True):
-            # Week 1 timetabling
-            if(shoppingCountWeekOne <= 3):
-                if (comboA == True):
-                    shoppingScheduleObjects[0].setShopToBuyFrom("A")
-                    shoppingScheduleObjects[0].setShopingToBuy(houseObjects[shoppingCountWeekOne].getNeedToBuyShopA())
-                    shoppingScheduleObjects[0].setShoppingQuantities(houseObjects[shoppingCountWeekOne].getNeedToBuyShopAQuantities())
-                if (comboB == True):
-                    shoppingScheduleObjects[1].setShopToBuyFrom("B")
-                    shoppingScheduleObjects[1].setShopingToBuy(houseObjects[shoppingCountWeekOne].getNeedToBuyShopB())
-                    shoppingScheduleObjects[1].setShoppingQuantities(houseObjects[shoppingCountWeekOne].getNeedToBuyShopBQuantities())
-                deliveryObjects[1].setDeliverySchedule(houseObjects[shoppingCountWeekOne].getHouseName())
-           
-            elif(shoppingCountWeekOne < 7):
-                if (comboA == True):
-                    shoppingScheduleObjects[2].setShopToBuyFrom("A")
-                    shoppingScheduleObjects[2].setShopingToBuy(houseObjects[shoppingCountWeekOne].getNeedToBuyShopA())
-                    shoppingScheduleObjects[2].setShoppingQuantities(houseObjects[shoppingCountWeekOne].getNeedToBuyShopAQuantities())
-                if (comboB == True):
-                    shoppingScheduleObjects[3].setShopToBuyFrom("B")
-                    shoppingScheduleObjects[3].setShopingToBuy(houseObjects[shoppingCountWeekOne].getNeedToBuyShopB())
-                    shoppingScheduleObjects[3].setShoppingQuantities(houseObjects[shoppingCountWeekOne].getNeedToBuyShopBQuantities())
-                deliveryObjects[3].setDeliverySchedule(houseObjects[shoppingCountWeekOne].getHouseName())
-                
-            # Week 2 timetabling
-            elif(shoppingCountWeekOne >= 7):
-                 if (comboA == True):
-                   shoppingScheduleObjects[8].setShopToBuyFrom("A")
-                   shoppingScheduleObjects[8].setShopingToBuy(houseObjects[shoppingCountWeekOne].getNeedToBuyShopA())
-                   shoppingScheduleObjects[8].setShoppingQuantities(houseObjects[shoppingCountWeekOne].getNeedToBuyShopAQuantities())
-                 if (comboB == True):
-                    shoppingScheduleObjects[9].setShopToBuyFrom("B")
-                    shoppingScheduleObjects[9].setShopingToBuy(houseObjects[shoppingCountWeekOne].getNeedToBuyShopB())
-                    shoppingScheduleObjects[9].setShoppingQuantities(houseObjects[shoppingCountWeekOne].getNeedToBuyShopBQuantities())
-                 deliveryObjects[9].setDeliverySchedule(houseObjects[shoppingCountWeekOne].getHouseName())
+                        shoppingScheduleObjects[shoppingScheduleObjectsCount].setShoppingQuantities(getShoppingFromShopQuantities(houseObjects[houseObjectsCount].getMinimalCombinations()[0], houseObjectsCount))
+                        shoppingScheduleObjects[shoppingScheduleObjectsCount + 1].setShoppingQuantities(getShoppingFromShopQuantities(houseObjects[houseObjectsCount].getMinimalCombinations()[1], houseObjectsCount))
             
-            elif(shoppingCountWeekOne < 7):
-                if (comboA == True):
-                    shoppingScheduleObjects[11].setShopToBuyFrom("A")
-                    shoppingScheduleObjects[11].setShopingToBuy(houseObjects[shoppingCountWeekOne].getNeedToBuyShopA())
-                    shoppingScheduleObjects[11].setShoppingQuantities(houseObjects[shoppingCountWeekOne].getNeedToBuyShopAQuantities())
-                if (comboB == True):
-                    shoppingScheduleObjects[12].setShopToBuyFrom("B")
-                    shoppingScheduleObjects[12].setShopingToBuy(houseObjects[shoppingCountWeekOne].getNeedToBuyShopB())
-                    shoppingScheduleObjects[12].setShoppingQuantities(houseObjects[shoppingCountWeekOne].getNeedToBuyShopBQuantities())
-                deliveryObjects[12].setDeliverySchedule(houseObjects[shoppingCountWeekOne].getHouseName())
-        
-        comboA = False
-        comboB = False
-        comboC = False
-        
-        
-        
-Scedule()        
-        
+                        deliveryObjects[shoppingScheduleObjectsCount + 1].setDeliverySchedule(houseObjects[houseObjectsCount].getHouseName())
+                        break
+     
 def outputScedule():
     shoppingSceduleCount = -1
     print("Shopping Scedule")
@@ -868,12 +879,46 @@ def outputDelivery():
             input("Press enter for next: ")
             print(" ")
              
-outputScedule()        
-outputDelivery()        
+      
+def main():
+    print("DADSA Assignment one TASK 1") #Prints project title
+    print(" ")
+    inputCSVShopList() 
+    countHouseNamesWeeks = inputCSVHouseNames()
+    inputCSVShoppingList(countHouseNamesWeeks)
+    categorySort() # Implement for task 2
+    giveItemNumber() 
+    replace()    
+    proccess()
 
+    houseCount = -1
+    for i in houseObjects:
+        houseCount = houseCount + 1
+        if (len(houseObjects[houseCount].getMinimalCombinations()) != 2):  # if house already has 2 shops only skip this itteration
+            substitutions(1,houseCount) # Implement for task 2
+    recalculateMinShops()
+    
+    houseCount2 = -1
+    for i in houseObjects:
+        houseCount2 = houseCount2 + 1
+        if (len(houseObjects[houseCount2].getMinimalCombinations()) != 2):  # if house already has 2 shops only skip this itteration
+            substitutions(2, houseCount2) # Implement for task 2
+    recalculateMinShops()
+
+    addDays()
+    shoppingSceduleAddShops(1,mergeShopList(1,commonShopCombinations(1))) 
+    shoppingSceduleAddShops(2,mergeShopList(2,commonShopCombinations(2))) 
+
+    shoppingSceduleShoppingSort(1)
+    shoppingSceduleShoppingSort(2)
+    # Implement for task 2  
+            
+    outputScedule()   # Implement for task 2     
+    outputDelivery()   # Implement for task 2     
+main()
 #printshopObjectsTest()
 #outputCategories() 
-#printHouseObjects()       
+printHouseObjects()       
         
         
         

@@ -458,9 +458,9 @@ def proccess():
                else:
                    print("Error 1: in proccess")   
 
-        combination = minimumStores(tempProccessed)
-        houseObjects[mainCounter].setStoreCombinations(combination)
-        tempProccessed = []
+        combination = minimumStores(tempProccessed)# find minimum combination
+        houseObjects[mainCounter].setStoreCombinations(combination)# set a houses minimum store combinations
+        tempProccessed = []# reset list
         itemListCounter = -1
     combination = []
 
@@ -773,17 +773,17 @@ def getShoppingFromShopQuantities(shop, houseCount):
     else:
         print("Error no shop selected in 'getShoppingFromShop' function")
 
-#appends to shopping list in 2 day intervals
+#creates shopping list using all data gathered
 def shoppingSceduleShoppingSort(week):
     houseObjectsCount = -1
-    for i in houseObjects:
+    for i in houseObjects:# for each house
         houseObjectsCount = houseObjectsCount + 1
         shoppingScheduleObjectsCount = -1
-        if (houseObjects[houseObjectsCount].getWeek() == week):
-            for x in shoppingScheduleObjects:
+        if (houseObjects[houseObjectsCount].getWeek() == week):# if the house is in the week spesified 
+            for x in shoppingScheduleObjects:# for each day in shopping scedule
                 shoppingScheduleObjectsCount = shoppingScheduleObjectsCount + 1
-                if (shoppingScheduleObjects[shoppingScheduleObjectsCount].getWeekShoppingSchedule() == week):
-                  
+                if (shoppingScheduleObjects[shoppingScheduleObjectsCount].getWeekShoppingSchedule() == week):# if shoppng scedule day is in the week spesified 
+                    # (code bellow this) if houses required for each house match the shopping schedule houses then add both the items and item quantity to it
                     if(houseObjects[houseObjectsCount].getMinimalCombinations()[0] == shoppingScheduleObjects[shoppingScheduleObjectsCount].getShopToBuyFrom() and houseObjects[houseObjectsCount].getMinimalCombinations()[1] == shoppingScheduleObjects[shoppingScheduleObjectsCount + 1].getShopToBuyFrom()):
                         shoppingScheduleObjects[shoppingScheduleObjectsCount].setShopingToBuy(getShoppingFromShop(houseObjects[houseObjectsCount].getMinimalCombinations()[0], houseObjectsCount))
                         shoppingScheduleObjects[shoppingScheduleObjectsCount + 1].setShopingToBuy(getShoppingFromShop(houseObjects[houseObjectsCount].getMinimalCombinations()[1], houseObjectsCount))
@@ -798,9 +798,9 @@ def shoppingSceduleShoppingSort(week):
 def outputScedule():
     shoppingSceduleCount = -1
     print("Shopping Scedule")
-    print(shoppingScheduleObjects)
     for i in shoppingScheduleObjects:
         shoppingSceduleCount = shoppingSceduleCount + 1
+        
         shopToBuyFrom = shoppingScheduleObjects[shoppingSceduleCount].getShopToBuyFrom()
         if(shopToBuyFrom != ""):
             print("===============================================")
@@ -808,7 +808,19 @@ def outputScedule():
             print("Day " + str(shoppingScheduleObjects[shoppingSceduleCount].getDayShoppingSchedule()))
             print("Shop to buy from: " + shopToBuyFrom)
             print("Items to buy: ")
-            print(shoppingScheduleObjects[shoppingSceduleCount].getShopingToBuy())
+            shopping = []
+            shoppingAmmount = [] 
+            
+            shopping =  shopping + shoppingScheduleObjects[shoppingSceduleCount].getShopingToBuy()
+            shoppingAmmount = shoppingAmmount + shoppingScheduleObjects[shoppingSceduleCount].getShoppingQuantities()
+            
+            shoppingCount = -1
+            for i in shopping:
+                shoppingCount = shoppingCount + 1
+                print("Item: " + str(shopping[shoppingCount]))
+                print("Ammount: " + str(shoppingAmmount[shoppingCount]))
+                print(" ")
+            print(" ")
             print("===============================================")
             input("Press enter for next: ")
             print(" ")
