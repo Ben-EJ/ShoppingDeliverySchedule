@@ -739,16 +739,14 @@ def mergeShopList(week, weekCombinations):
 
 def shoppingSceduleAddShops(week, listOfShops):
     listOfshopCount = -1
-    for z in listOfShops:
+    for z in listOfShops: # for each shop 
         listOfshopCount = listOfshopCount + 1
         shoppingScheduleCount = -1
-        for b in shoppingScheduleObjects:
+        for b in shoppingScheduleObjects:# for each day in shopping list
             shoppingScheduleCount = shoppingScheduleCount + 1
-            if(shoppingScheduleObjects[shoppingScheduleCount].getWeekShoppingSchedule() == week):
-        
-                if(shoppingScheduleObjects[shoppingScheduleCount].getShopToBuyFrom() == ""):
-  
-                    shoppingScheduleObjects[shoppingScheduleCount].setShopToBuyFrom(listOfShops[listOfshopCount])
+            if(shoppingScheduleObjects[shoppingScheduleCount].getWeekShoppingSchedule() == week):# only append to the shopping list in the week spesified 
+                if(shoppingScheduleObjects[shoppingScheduleCount].getShopToBuyFrom() == ""):# if the shop to buy field is blank then
+                    shoppingScheduleObjects[shoppingScheduleCount].setShopToBuyFrom(listOfShops[listOfshopCount])#set Shop
                     break
 
 def getShoppingFromShop(shop, houseCount):
