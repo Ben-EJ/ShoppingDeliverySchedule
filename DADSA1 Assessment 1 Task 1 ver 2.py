@@ -495,7 +495,7 @@ def proccess():
                if (canBeFoundInStore == "A"):# if it can be found in store A                  
                    houseObjects[mainCounter].setNeedToBuyShopA(itemName) # add item to the list if items needed to buy from shop A 
                    houseObjects[mainCounter].setNeedToBuyShopAQuantities(tempItemListStorage[itemListCounter])# add quantity to the list if items needed to buy from shop A
-                 # each of these if statements is the same as for shop D but obviously appends to there diffrent respective item lists 
+                 # each of these if statements is the same as for shop A but obviously appends to there diffrent respective item lists 
                elif(canBeFoundInStore == "B"):
                    houseObjects[mainCounter].setNeedToBuyShopB(itemName) 
                    houseObjects[mainCounter].setNeedToBuyShopBQuantities(tempItemListStorage[itemListCounter])
@@ -815,7 +815,7 @@ def shoppingSceduleShoppingSort(week):
             for x in shoppingScheduleObjects:# for each day in shopping scedule
                 shoppingScheduleObjectsCount = shoppingScheduleObjectsCount + 1
                 if (shoppingScheduleObjects[shoppingScheduleObjectsCount].getWeekShoppingSchedule() == week):# if shoppng scedule day is in the week spesified 
-                    # (code bellow this) if houses required for each house match the shopping schedule houses then add both the items and item quantity to it
+                    # (code bellow this) if shops required for a house match shopping schedule shops then then add both the items and item quantity to it
                     if(houseObjects[houseObjectsCount].getMinimalCombinations()[0] == shoppingScheduleObjects[shoppingScheduleObjectsCount].getShopToBuyFrom() and houseObjects[houseObjectsCount].getMinimalCombinations()[1] == shoppingScheduleObjects[shoppingScheduleObjectsCount + 1].getShopToBuyFrom()):
                         shoppingScheduleObjects[shoppingScheduleObjectsCount].setShopingToBuy(getShoppingFromShop(houseObjects[houseObjectsCount].getMinimalCombinations()[0], houseObjectsCount))
                         shoppingScheduleObjects[shoppingScheduleObjectsCount + 1].setShopingToBuy(getShoppingFromShop(houseObjects[houseObjectsCount].getMinimalCombinations()[1], houseObjectsCount))
