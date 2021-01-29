@@ -497,7 +497,7 @@ def Swap(itemsRequired,toAvoid,biggestShopItemList):
                 for n in catagoryObjects[catagoryCount].getItemList(): # loops through items finds a diffrent item in that catagory
                     catagoryItemToSwapWith = catagoryItemToSwapWith + 1
                     newItemStores = shopObjects[getItemNumber(catagoryObjects[catagoryCount].getItemList()[catagoryItemToSwapWith])].getItemStores() # gets items stores of new item
-                    if(catagoryObjects[catagoryCount].getItemList()[catagoryItemToSwapWith] !=  itemsRequired and newItemStores[0] == aBiggestShop or newItemStores[1] == bBiggestShop or newItemStores[3] == cBiggestShop): # If can be bought from the shop with the most ammount of items
+                    if(catagoryObjects[catagoryCount].getItemList()[catagoryItemToSwapWith] !=  itemsRequired and newItemStores[0] == aBiggestShop or newItemStores[1] == bBiggestShop or newItemStores[2] == cBiggestShop): # If can be bought from the shop with the most ammount of items
                         return catagoryObjects[catagoryCount].getItemList()[catagoryItemToSwapWith] # return new item
 
                         
