@@ -726,6 +726,7 @@ def addDays():
         deliveryObjects.append(Delivery(dayCount,weekCount))#Adds days
 # each week is split into two week periods 
 # the two sets of houses are created these are the main sets of shops    
+#Appends all shops in given shop combinations for a week into one list I.E [[A,B],[D,B]] to [A,B,D,B]
 def mergeShopList(week, weekCombinations):
     listOfShops = []
     weekCombinationsCount = -1
@@ -736,7 +737,7 @@ def mergeShopList(week, weekCombinations):
             weekCombinationsShopCount = weekCombinationsShopCount + 1
             listOfShops.append(weekCombinations[weekCombinationsCount][weekCombinationsShopCount]) # append to new list
     return listOfShops
-
+# adds shops to the shopping scedule 
 def shoppingSceduleAddShops(week, listOfShops):
     listOfshopCount = -1
     for z in listOfShops: # for each shop 

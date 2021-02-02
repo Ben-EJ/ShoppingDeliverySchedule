@@ -510,9 +510,6 @@ def proccess():
         tempProccessed = []# reset list
         itemListCounter = -1
     combination = []
-    
-    
-
 
 def getItemNumber(item):
     ShopItemNumber = -1
@@ -760,7 +757,7 @@ def addDays():
         deliveryObjects.append(Delivery(dayCount,weekCount))#Adds days
 #function merges all shops required to visit into one list
 # each week is split into two week periods 
-# the two sets of houses are created these are the main sets of shops    
+#Appends all shops in given shop combinations for a week into one list I.E [[A,B],[D,B]] to [A,B,D,B]    
 def mergeShopList(week, weekCombinations):
     listOfShops = []
     weekCombinationsCount = -1
