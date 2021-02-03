@@ -3,7 +3,19 @@
 DADSA Assignment one TASK 1
 Created on Wed Dec 30 18:41:50 2020 NEW VERSION
 
+Version 3 of task one
+Update: Dictionarys replaced with Storage classes and algorithms improved and shortened
+
 @author: benjamin Ell-Jones 
+"""
+
+
+"""
+
+TO DO:
+1. display item quantitys 
+2. 
+
 """
 import csv
 
@@ -790,32 +802,31 @@ def outputDelivery():
             print("===============================================")
             input("Press enter for next: ")
             print(" ")
-                
-#runs all other functions    
+             
+      
 def main():
-    print("DADSA Assignment one TASK 2") #Prints project title
+    print("DADSA Assignment one TASK 1") #Prints project title
     print(" ")
     # ==================== this section of function calls handles data intake and sorting ===================================
     inputCSVShopList() 
     countHouseNamesWeeks = inputCSVHouseNames()
-    countHouseNamesWeeks.pop(0)# removes ellipsis
     inputCSVShoppingList(countHouseNamesWeeks)
-    categorySort() 
+    categorySort() # Implement for task 2
     giveItemNumber() 
     replace()    
     proccess()
     #===========================Section End============================
-
+    
     #===============each time this section of code is run in removes one shop from each houses minimum shop list by substituting ===============
-    for i in range(0, 2):# removes 2 shops from miminum combinations for each house
+    for x in range(0, 2):
         houseCount = -1
-        for i in houseObjects:# for each house
+        for i in houseObjects:
             houseCount = houseCount + 1
-            if (len(houseObjects[houseCount].getMinimalCombinations()) > 2): # if the lenth of each houses minimum shop combonation list is greater than or equal to 2 then
-                substitutions(houseCount)# exacutes substatution operation
-        recalculateMinShops()# recalculates minimum shop combos for each house. Uses after a substatution operation has been performed
+            if (len(houseObjects[houseCount].getMinimalCombinations()) > 2):  # if house already has 2 shops only skip this itteration
+                substitutions(houseCount) # Implement for task 2
+        recalculateMinShops()
     #==================================================================Section End==========================================================================
-
+    
     # ===================this next section of function calls deals with schedule creation =======================
     addDays()
     shoppingSceduleAddShops(1,mergeShopList(1,commonShopCombinations(1))) 
@@ -825,13 +836,11 @@ def main():
     shoppingSceduleShoppingSort(2)
     #==============Section End===================
 
-    #================= outputs results ======================       
-    outputScedule()      
+    #================= outputs results ======================        
+    outputScedule()     
     outputDelivery()  
-    #==============Section End================   
-
+    #==============Section End===================      
 main()
-     
      
         
         
