@@ -10,10 +10,10 @@ import csv
 #Class to store Shop data
 class Item:
     def __init__(self, itemName, itemPrice,itemStores):
-        self.itemNumber = 0
-        self.itemName = itemName
-        self.itemPrice = itemPrice 
-        self.itemStores = itemStores
+        self.itemNumber = 0 # stores item number 
+        self.itemName = itemName# stores item name 
+        self.itemPrice = itemPrice # stores item price
+        self.itemStores = itemStores# stores the shops that item can be bought from
         
     def getItemNumber(self):
         return self.itemNumber
@@ -29,22 +29,23 @@ class Item:
 #Class to store shopping list data
 class ShoppingLists:
     def __init__(self,houseName,week, itemList):   
-        self.houseName = houseName
-        self.itemList = itemList
-        self.minimalCombinations = []
-        self.week = week
-        self.ammountShopsSceduled = 0
-        self.addedToDelivery = False
-
-        self.needToBuyShopA = []
-        self.needToBuyShopAQuantities = []
-        self.needToBuyShopB = []
-        self.needToBuyShopBQuantities = []
-        self.needToBuyShopC = []
-        self.needToBuyShopCQuantities = []
+        self.houseName = houseName # stores house name
+        self.itemList = itemList # stores items shopping list
+        self.minimalCombinations = [] # stores the shops the house needs to visit to forfill order
+        self.week = week# stores what week this houses is in
         
-        self.needToBuyShopD = []
-        self.needToBuyShopDQuantities = []
+        self.needToBuyShopA = []# stores what items this house needs from shop A
+        self.needToBuyShopAQuantities = []# stores what quantity of items this house needs from shop A
+        self.needToBuyShopB = []# stores what items this house needs from shop B
+        self.needToBuyShopBQuantities = []# stores what quantity of items this house needs from shop B
+        self.needToBuyShopC = []# stores what items this house needs from shop C
+        self.needToBuyShopCQuantities = []# stores what quantity of items this house needs from shop C
+        
+        self.needToBuyShopD = []# stores what items this house needs from shop D CHEAP STORE
+        self.needToBuyShopDQuantities = []# stores what quantity of items this house needs from shop D CHEAP STORE
+
+        self.ammountShopsSceduled = 0# stores the ammount of shops that this house requires 
+        self.addedToDelivery = False# keeps track of if the house has been added to the delivery schedule
         
     def getHouseName(self):
         return self.houseName
@@ -129,8 +130,8 @@ class ShoppingLists:
         
 class Catagories: 
     def __init__(self,catagoryName ,itemList):   
-        self.catagoryName = catagoryName
-        self.itemList = itemList
+        self.catagoryName = catagoryName# catagory name
+        self.itemList = itemList# Items in catagory
     
     def getCatagoryName(self):
         return self.catagoryName
@@ -144,9 +145,9 @@ class Catagories:
 
 class Delivery():
     def __init__(self, day, week):   
-        self.day = day 
-        self.week = week
-        self.deliverySchedule = []
+        self.day = day# stores day
+        self.week = week# stores week
+        self.deliverySchedule = []# houses that will need to be deliverd to on this particular day in week
         
     def getDayDelivery(self):
         return self.day
@@ -163,11 +164,11 @@ class Delivery():
             
 class ShoppingSchedule():
     def __init__(self,day,week):   
-        self.day = day  
-        self.week = week
-        self.ShopToBuyFrom = ""
-        self.ShoppingToBuy = []
-        self.ShoppingQuantities = []
+        self.day = day  # stores day 
+        self.week = week # stores week
+        self.ShopToBuyFrom = "" # stores the shop that this day will be used to buy from
+        self.ShoppingToBuy = [] # this stores the shopping that needs to be bought on this day
+        self.ShoppingQuantities = []# this stores the shopping quantitys that needs to be bought on this day
         
     def getDayShoppingSchedule(self):
         return self.day
@@ -195,8 +196,8 @@ shopObjects = [] # Stores a list of shop objects
 houseObjects = [] # stores a list of shopping list objects
 catagoryObjects = [] # stores a list of catagory objects
 
-shoppingScheduleObjects = []
-deliveryObjects = []
+shoppingScheduleObjects = []# stores shopping schedule objects (days)
+deliveryObjects = []# stores delivery schedule objects (days)
 
 countHouseNamesWeeks = [] # Stores a list of house names obtained by running inputCSVHouseNames() the result of that function is stored in here
 
@@ -617,7 +618,7 @@ def outputScedule():
                 print(" ")
             print(" ")
             print("===============================================")
-            input("Press enter for next: ")
+            input("Press enter for shopping day next: ")
             print(" ")
 
 #outputs delivery schedule
@@ -628,20 +629,14 @@ def outputDelivery():
         deliveryObjectsCount = deliveryObjectsCount + 1
 
         houseToDeliverTo = deliveryObjects[deliveryObjectsCount].getdeliverySchedule()
-        if not houseToDeliverTo:
-            print("===============================================")
-            print("Week: " + str(deliveryObjects[deliveryObjectsCount].getWeekDelivery()))
-            print("Day " + str(deliveryObjects[deliveryObjectsCount].getDayDelivery()))
-            print("No delivery today")
-            print("===============================================")
-        else:
+        if (len(houseToDeliverTo) > 0):
             print("===============================================")
             print("Week: " + str(deliveryObjects[deliveryObjectsCount].getWeekDelivery()))
             print("Day " + str(deliveryObjects[deliveryObjectsCount].getDayDelivery()))
             print("Houses to deliver to: ")
             print(houseToDeliverTo)
             print("===============================================")
-            input("Press enter for next: ")
+            input("Press enter for next delivery day: ")
             print(" ")
 
 #runs all other functions    
