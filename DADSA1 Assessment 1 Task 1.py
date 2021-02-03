@@ -832,7 +832,8 @@ def main():
     #================= outputs results ======================        
     outputScedule()     
     outputDelivery()  
-    #==============Section End===================      
+    #==============Section End===================
+    input("Press enter to close program ")
 main()
      
         
