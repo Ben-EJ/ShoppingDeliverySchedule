@@ -1,24 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-DADSA Assignment one TASK 1
+DADSA Assignment one TASK 2
 Created on Wed Dec 30 18:41:50 2020 NEW VERSION
 
-Version 3 of task one
-Update: Dictionarys replaced with Storage classes and algorithms improved and shortened
-
 @author: benjamin Ell-Jones 
-"""
-
-
-"""
-
-TO DO:
-1. delivery algorithm
-2. Scheduling algorithm
-3. tidy up
-4. fix bug
-5. comment
-6.
 """
 import csv
 
@@ -338,9 +323,9 @@ def categorySort():
          
         splitElementCount = -1    
     countClassInput = -1 
-    for i in categoryTempStoreageKey:
+    for i in categoryTempStoreageKey:# for each catagory 
         countClassInput = countClassInput + 1
-        catagoryObjects.append(Catagories(categoryTempStoreageKey[countClassInput], categoryTempStoreage[categoryTempStoreageKey[countClassInput]]))
+        catagoryObjects.append(Catagories(categoryTempStoreageKey[countClassInput], categoryTempStoreage[categoryTempStoreageKey[countClassInput]]))# add each catagory from dictionary to class object 
 
 #Gives all items in the shopObjects = [] array Item Numbers
 def giveItemNumber():
@@ -784,15 +769,15 @@ def shoppingSceduleShoppingSort(week):
             for x in shoppingScheduleObjects:# for each day in shopping scedule
                 shoppingScheduleObjectsCount = shoppingScheduleObjectsCount + 1
                 if (shoppingScheduleObjects[shoppingScheduleObjectsCount].getWeekShoppingSchedule() == week):# if shoppng scedule day is in the week spesified 
-                    # (code bellow this) if houses required for each house match the shopping schedule houses then add both the items and item quantity to it
+                    # (code bellow this) if shop required for each house match the shopping schedule shop then add both the items and item quantity to it do this also for the next shop in the minimum shops list for a given house
                     if(houseObjects[houseObjectsCount].getMinimalCombinations()[0] == shoppingScheduleObjects[shoppingScheduleObjectsCount].getShopToBuyFrom() and houseObjects[houseObjectsCount].getMinimalCombinations()[1] == shoppingScheduleObjects[shoppingScheduleObjectsCount + 1].getShopToBuyFrom()):
                         shoppingScheduleObjects[shoppingScheduleObjectsCount].setShopingToBuy(getShoppingFromShop(houseObjects[houseObjectsCount].getMinimalCombinations()[0], houseObjectsCount))
                         shoppingScheduleObjects[shoppingScheduleObjectsCount + 1].setShopingToBuy(getShoppingFromShop(houseObjects[houseObjectsCount].getMinimalCombinations()[1], houseObjectsCount))
 
                         shoppingScheduleObjects[shoppingScheduleObjectsCount].setShoppingQuantities(getShoppingFromShopQuantities(houseObjects[houseObjectsCount].getMinimalCombinations()[0], houseObjectsCount))
                         shoppingScheduleObjects[shoppingScheduleObjectsCount + 1].setShoppingQuantities(getShoppingFromShopQuantities(houseObjects[houseObjectsCount].getMinimalCombinations()[1], houseObjectsCount))
-            
-                        deliveryObjects[shoppingScheduleObjectsCount + 1].setDeliverySchedule(houseObjects[houseObjectsCount].getHouseName())
+
+                        deliveryObjects[shoppingScheduleObjectsCount + 1].setDeliverySchedule(houseObjects[houseObjectsCount].getHouseName())# add house name to delivery scedule for next day.
                         break
 
 #outputs Shopping scedule
@@ -850,117 +835,46 @@ def outputDelivery():
             input("Press enter for next: ")
             print(" ")
 
-# prints out data from each object in shopObjects FOR TESTING PERPOSES ONLY    
-def printshopObjectsTest():
-    count = -1
-    for x in shopObjects:
-        count = count + 1
-        print("====================================================") 
-        print(shopObjects[count].getItemNumber())
-        print(shopObjects[count].getItemName())
-        print(shopObjects[count].getItemPrice())
-        print(shopObjects[count].getItemStores())
-        print("====================================================") 
-        print(" ")
-        
-# prints out data from each object in houseObjects FOR TESTING PERPOSES ONLY    
-def printHouseObjects():
-    count = -1
-    for x in houseObjects:
-        count = count + 1
-        print("House name: " + houseObjects[count].getHouseName())
-        print("Week: " + str(houseObjects[count].getWeek()))
-        print(houseObjects[count].getItemList())
-        print(houseObjects[count].getMinimalCombinations())
-        print(" ")
-        print("From shop A:")
-        print(houseObjects[count].getNeedToBuyShopA())
-        print(" ")
-        print("From shop B:")
-        print(houseObjects[count].getNeedToBuyShopB())
-        print(" ") 
-        print("From shop C:")
-        print(houseObjects[count].getNeedToBuyShopC())
-        print(" ")
-        print("From shop D:")
-        print(houseObjects[count].getNeedToBuyShopD())
-        print(" ")
-        print("Item Quantities")
-        print("From shop A:")
-        print(houseObjects[count].getNeedToBuyShopAQuantities())
-        print(" ")
-        print("From shop B:")
-        print(houseObjects[count].getNeedToBuyShopBQuantities())
-        print(" ") 
-        print("From shop C:")
-        print(houseObjects[count].getNeedToBuyShopCQuantities())
-        print(" ") 
-        print("From shop D:")
-        print(houseObjects[count].getNeedToBuyShopDQuantities())
-        print("====================================================")  
-        
-        
-# prints out data from each object in catagories FOR TESTING PERPOSES ONLY       
-def outputCategories():
-    print(" ")
-    count = -1
-    for i in catagoryObjects:
-        count =  count + 1
-        print("===================================================================")
-        print("Catagory: " + catagoryObjects[count].getCatagoryName()) 
-        print("Item Numbers")     
-        print(catagoryObjects[count].getItemList())
-        print("===================================================================") 
-        print(" ")
-#Returns house objects that are in week 1
-
 #runs all other functions    
 def main():
     print("DADSA Assignment one TASK 2") #Prints project title
     print(" ")
+    # ==================== this section of function calls handles data intake and sorting ===================================
     inputCSVShopList() 
     countHouseNamesWeeks = inputCSVHouseNames()
-    countHouseNamesWeeks.pop(0)
+    countHouseNamesWeeks.pop(0)# removes ellipsis
     inputCSVShoppingList(countHouseNamesWeeks)
-    categorySort() # Implement for task 2
+    categorySort() 
     giveItemNumber() 
     replace()    
     proccess()
+    #===========================Section End============================
 
-    houseCount = -1
-    for i in houseObjects:
-        houseCount = houseCount + 1
-        if (len(houseObjects[houseCount].getMinimalCombinations()) != 2):  # if house already has 2 shops only skip this itteration
-            substitutions(houseCount) # Implement for task 2
-    recalculateMinShops()
-    
-    houseCount2 = -1
-    for i in houseObjects:
-        houseCount2 = houseCount2 + 1
-        if (len(houseObjects[houseCount2].getMinimalCombinations()) != 2):  # if house already has 2 shops only skip this itteration
-            substitutions(houseCount2) # Implement for task 2
-    recalculateMinShops()
+    #===============each time this section of code is run in removes one shop from each houses minimum shop list by substituting ===============
+    for i in range(0, 2):# removes 2 shops from miminum combinations for each house
+        houseCount = -1
+        for i in houseObjects:# for each house
+            houseCount = houseCount + 1
+            if (len(houseObjects[houseCount].getMinimalCombinations()) > 2): # if the lenth of each houses minimum shop combonation list is greater than or equal to 2 then
+                substitutions(houseCount)# exacutes substatution operation
+        recalculateMinShops()# recalculates minimum shop combos for each house. Uses after a substatution operation has been performed
+    #==================================================================Section End==========================================================================
 
+    # ===================this next section of function calls deals with schedule creation =======================
     addDays()
     shoppingSceduleAddShops(1,mergeShopList(1,commonShopCombinations(1))) 
     shoppingSceduleAddShops(2,mergeShopList(2,commonShopCombinations(2))) 
 
     shoppingSceduleShoppingSort(1)
     shoppingSceduleShoppingSort(2)
-    # Implement for task 2  
-            
-    outputScedule()   # Implement for task 2     
-    outputDelivery()   # Implement for task 2     
+    #==============Section End===================
+    
+    #================= outputs results ======================       
+    outputScedule()      
+    outputDelivery()  
+    #==============Section End================   
 
 main()
-
-#outputs class data for testing    
-def test():      
-    #printshopObjectsTest()
-    #outputCategories() 
-    printHouseObjects()             
-#test()        
-
      
         
         
