@@ -4,7 +4,7 @@ DADSA Assignment one TASK 1
 Created on Wed Dec 30 18:41:50 2020 NEW VERSION
 
 Version 3 of task one
-Update: Dictionarys replaced with Storage classes and algorithms improved and shortened
+Update: Dictionaries replaced with Storage classes and algorithms improved and shortened
 
 @author: benjamin Ell-Jones 
 """
